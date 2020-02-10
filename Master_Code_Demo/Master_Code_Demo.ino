@@ -14,7 +14,7 @@ int tc = 1000;
 
 void setup() {
   Serial.begin(115200); //communicate with seriel at this speed
-  Serial3.begin(115200);
+  Serial3.begin(115200); //Start the Radio at this baud rate.
   InitializeMotor();
   InitializeGPS();
   Serial.println("Time, Throttle Percentage, Throttle RPM, var,vary");  //Setup Column Headers for easy matlab import.
