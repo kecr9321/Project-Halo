@@ -103,17 +103,6 @@ void readGPS(){
   }
 }
 
-long calculateBeta(){
-  double g = 9.81;
-  double w_x = 5;
-  double w_y = 7;
-  double w_z = 9;
-  double radius = 15.1 * 0.0254;
-  long absOmeg = sqrt(pow(w_x,2) + pow(w_y,2) + pow(w_z,2));
-  long beta = atan(pow(absOmeg,2)*radius/g);
-  return beta;
-  }
-  
 double convertDegMinToDecDeg (float degMin) {
   double min = 0.0;
   double decDeg = 0.0;
