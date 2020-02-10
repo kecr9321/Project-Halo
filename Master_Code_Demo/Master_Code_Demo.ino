@@ -17,7 +17,7 @@ void setup() {
   Serial3.begin(115200); //Start the Radio at this baud rate.
   InitializeMotor();
   InitializeGPS();
-  Serial.println("Time, Throttle Percentage, Throttle RPM, var,vary");  //Setup Column Headers for easy matlab import.
+  Serial.println("Time, Throttle Percentage, Throttle RPM");  //Setup Column Headers for easy matlab import.
 }
 
 void loop() {
