@@ -1,0 +1,1853 @@
+classdef MURI_HAB_GUI_v18_Permanent_GS < matlab.apps.AppBase
+
+    % Properties that correspond to app components
+    properties (Access = public)
+        UIFigure                       matlab.ui.Figure
+        ConfigureMenu                  matlab.ui.container.Menu
+        RefreshCOMPortsMenu            matlab.ui.container.Menu
+        LoadMapsMenu                   matlab.ui.container.Menu
+        LoadPredictionFileMenu         matlab.ui.container.Menu
+        alt_horiz2D                    matlab.ui.control.UIAxes
+        Location2D                     matlab.ui.control.UIAxes
+        ElevationGauge                 matlab.ui.control.SemicircularGauge
+        AzGauge                        matlab.ui.control.LinearGauge
+        CW_SA_plot                     matlab.ui.control.UIAxes
+        sltRange                       matlab.ui.control.Label
+        RangekmLabel                   matlab.ui.control.Label
+        MapRadiusLabel                 matlab.ui.control.Label
+        radius                         matlab.ui.control.Label
+        kmLabel                        matlab.ui.control.Label
+        BatteryVoltageLabel            matlab.ui.control.Label
+        AscentRateGPS                  matlab.ui.control.Label
+        ADRateGPSLabel                 matlab.ui.control.Label
+        HW_SA_plot                     matlab.ui.control.UIAxes
+        HWVoltageLabel                 matlab.ui.control.Label
+        CWVoltageLabel                 matlab.ui.control.Label
+        TemperaturesLabel              matlab.ui.control.Label
+        Ambient1degCLabel              matlab.ui.control.Label
+        Ambient2degCLabel              matlab.ui.control.Label
+        Internal1degCLabel             matlab.ui.control.Label
+        Internal2degCLabel             matlab.ui.control.Label
+        InstructionsLabel              matlab.ui.control.Label
+        InstructionsTextArea           matlab.ui.control.TextArea
+        VentvalveinfoLabel             matlab.ui.control.Label
+        NosignalLampLabel              matlab.ui.control.Label
+        NosignalLamp                   matlab.ui.control.Lamp
+        StopCloseButton                matlab.ui.control.StateButton
+        LatRate                        matlab.ui.control.Label
+        LatRateLabel                   matlab.ui.control.Label
+        LonRate                        matlab.ui.control.Label
+        LonRateLabel                   matlab.ui.control.Label
+        HorizSpeed                     matlab.ui.control.Label
+        HorizSpeedLabel                matlab.ui.control.Label
+        LastreceivedLabel              matlab.ui.control.Label
+        AntennaTuningParametersPanel   matlab.ui.container.Panel
+        AtzeroELbiasantennaangleat8degLabel  matlab.ui.control.Label
+        ELBiasEditFieldLabel           matlab.ui.control.Label
+        ELBiasEditField                matlab.ui.control.EditField
+        AzBiasEditFieldLabel           matlab.ui.control.Label
+        AzBiasEditField                matlab.ui.control.EditField
+        LockalignmentButton            matlab.ui.control.Button
+        AntennaalignmentazimuthbiasdegLabel  matlab.ui.control.Label
+        AzimuthBias                    matlab.ui.control.NumericEditField
+        RotatorAlignmentMethodSwitchLabel  matlab.ui.control.Label
+        RotatorAlignmentMethodSwitch   matlab.ui.control.Switch
+        alignmentNote                  matlab.ui.control.Label
+        ElevationdegLabel              matlab.ui.control.Label
+        AzimuthdegLabel                matlab.ui.control.Label
+        Panel                          matlab.ui.container.Panel
+        BeginTrackingButton            matlab.ui.control.Button
+        ConnectGSButton                matlab.ui.control.Button
+        ConnectingLabel                matlab.ui.control.Label
+        DisconnectGSButton             matlab.ui.control.Button
+        EndTrackingButton              matlab.ui.control.Button
+        GSCOMPortDropDownLabel         matlab.ui.control.Label
+        GSCOMPortDropDown              matlab.ui.control.DropDown
+        RxCOMPortDropDownLabel         matlab.ui.control.Label
+        RxCOMPortDropDown              matlab.ui.control.DropDown
+        ListeningLampLabel             matlab.ui.control.Label
+        ListeningLamp                  matlab.ui.control.Lamp
+        ReceivingLampLabel             matlab.ui.control.Label
+        ReceivingLamp                  matlab.ui.control.Lamp
+        AntenaTrackingModeButtonGroup  matlab.ui.container.ButtonGroup
+        AzElButton                     matlab.ui.control.RadioButton
+        AzOnlyButton                   matlab.ui.control.RadioButton
+        ElOnlyButton                   matlab.ui.control.RadioButton
+        ManualButton                   matlab.ui.control.RadioButton
+        SerialBufferLabel              matlab.ui.control.Label
+        Panel_2                        matlab.ui.container.Panel
+        gpsLAT                         matlab.ui.control.Label
+        gpsLONG                        matlab.ui.control.Label
+        gpsALT                         matlab.ui.control.Label
+        gpsFIX                         matlab.ui.control.Label
+        LatitudeLabel                  matlab.ui.control.Label
+        LongitudeLabel                 matlab.ui.control.Label
+        AltitudeLabel                  matlab.ui.control.Label
+        GPSFixLabel                    matlab.ui.control.Label
+        gpsSATS                        matlab.ui.control.Label
+        SatsLabel                      matlab.ui.control.Label
+        GPSTOWmsLabel                  matlab.ui.control.Label
+        UseXBtosetGSPositionButton     matlab.ui.control.Button
+        GPSstatLamp                    matlab.ui.control.Lamp
+        GPSLockLabel                   matlab.ui.control.Label
+        AltitudeEditFieldLabel         matlab.ui.control.Label
+        GS_Altitude                    matlab.ui.control.EditField
+        LongitudeEditFieldLabel        matlab.ui.control.Label
+        GS_Longitude                   matlab.ui.control.EditField
+        LatitudeEditFieldLabel         matlab.ui.control.Label
+        GS_Latitude                    matlab.ui.control.EditField
+        LatitudeDiffmLabel             matlab.ui.control.Label
+        LatitudeDiff                   matlab.ui.control.NumericEditField
+        LongitudeDiffmLabel            matlab.ui.control.Label
+        LongitudeDiff                  matlab.ui.control.NumericEditField
+        LaunchTimeButton               matlab.ui.control.Button
+        LaunchTimeLabel                matlab.ui.control.Label
+        ElapsedTimeLabel               matlab.ui.control.Label
+        gpsTOW                         matlab.ui.control.Label
+        GroundstationinfoLabel         matlab.ui.control.Label
+        Panel_3                        matlab.ui.container.Panel
+        LostPackets                    matlab.ui.control.Label
+        ReceivedPackets                matlab.ui.control.Label
+        LossesLabel                    matlab.ui.control.Label
+        GondolapacketsLabel            matlab.ui.control.Label
+        InstrpacketsLabel              matlab.ui.control.Label
+        InstrPacket_start              matlab.ui.control.Label
+        GondPacket_start               matlab.ui.control.Label
+        InstrPacket_now                matlab.ui.control.Label
+        GondPacket_now                 matlab.ui.control.Label
+        RawPacket_start                matlab.ui.control.Label
+        RawpacketsLabel                matlab.ui.control.Label
+        EpochIdxrawLabel               matlab.ui.control.Label
+        RecordIdxrawLabel              matlab.ui.control.Label
+        NoStatusLampLabel              matlab.ui.control.Label
+        NoStatusLamp                   matlab.ui.control.Lamp
+        VentclosedLampLabel            matlab.ui.control.Label
+        VentclosedLamp                 matlab.ui.control.Lamp
+        VentopenLampLabel              matlab.ui.control.Label
+        VentopenLamp                   matlab.ui.control.Lamp
+        AscentRateEst                  matlab.ui.control.Label
+        estimatedvalueLabel            matlab.ui.control.Label
+        GPSVelocitiesLabel             matlab.ui.control.Label
+        RMShorizvelLabel               matlab.ui.control.Label
+        RMSvertvelLabel                matlab.ui.control.Label
+    end
+
+    properties (Access = private)
+        % These are global variables that can be accessed by app." variable  "
+        xdata % For plotting x data
+        ydata % For plotting y data
+        zdata % For plotting z data
+        wdata % For plotting w data
+        flag = 0;
+        flag_GS = 0;    
+        hC = 0;
+        maxC =0;
+        myGSCoord;
+        WYpredicted;
+        spheroid = referenceEllipsoid('WGS 84');
+        CUSFpredicted;
+        
+        startTime = 0;
+        newMapFlag = 0;
+        predFileFlag = 0;
+        predFileCol = ['k', 'r', 'b', 'g', 'c'];
+        
+        raw_CWf;    %raw cold wire data figure
+        raw_HWf;    %raw hot wire data figure
+        axCW;       %raw cold wire axes
+        axHW;       %raw hot wire axes
+        
+        loopBreak = 0;  %check for value '1' during tracking loop
+        set_GS_loc = false;
+        plot_GPS_data = false;
+    end
+    
+    properties (Access = public)
+        dataFile;
+        gpsData;
+        scientificData;
+        serial_GS;
+        A; B;
+        s;
+        
+    end
+    
+    
+    methods (Access = private)
+        
+        function updateGPSdata(app,lon,lat,h,lon0,lat0,h0,numSats,GPS_TOW,GPS_Fix)
+           % *********************
+           % Update all values and fields relating to GPS
+           % *********************
+ 
+            
+           %Update if needed
+           if str2num(app.GS_Longitude.Value)~=0
+               lon0 = str2num(app.GS_Longitude.Value);
+               lat0 = str2num(app.GS_Latitude.Value);
+               h0 = str2num(app.GS_Altitude.Value); 
+           end
+            
+           % Difference between lat and lon   
+           lonDiff = (lon - lon0)*111000*cosd(lat0); %[m]
+           latDiff =  (lat - lat0)*111000;            %[m]
+           horizDiff = sqrt(latDiff^2 + lonDiff^2);    %[m]
+            
+           app.LongitudeDiff.Value = lonDiff;
+           app.LatitudeDiff.Value = latDiff;
+            
+           %Plot GS Location only once, if firstIteration from main loop is true:
+           if app.set_GS_loc
+                plot(app.alt_horiz2D, 0, h0/1000, 'r*', 'LineWidth',3)
+                plot(app.Location2D, 0, 0, 'r*')
+                app.set_GS_loc = false;
+           end
+           
+            %GPS status indicator
+           if GPS_Fix == 3 % 3D lock indicator
+               app.GPSstatLamp.Color = 'green';
+               
+               % Only plot if 3D lock obtained
+
+               if app.plot_GPS_data %Plot GPS Data
+                    plot(app.alt_horiz2D, horizDiff/1000, h/1000,'b*','LineWidth',1)
+                    plot(app.Location2D, lonDiff/1000, latDiff/1000,'b*')
+                    app.plot_GPS_data = false; % re-set plotting flag
+               end
+           else
+               app.GPSstatLamp.Color = 'red';
+           end
+           
+           %Print Current GPS Data
+           app.gpsLAT.Text  = num2str(lat,'%.8f');
+           app.gpsLONG.Text = num2str(lon,'%.8f');
+           app.gpsALT.Text  = num2str(h,'%.4f');
+           app.gpsFIX.Text = num2str(GPS_Fix);
+           app.gpsSATS.Text = num2str(numSats);
+           app.gpsTOW.Text = num2str(GPS_TOW);
+           
+           
+           %Compute the AZ/EL parameters for the GS and range.
+           [az,el,range] = geodetic2aer(lat,lon,h,lat0,lon0,h0,app.spheroid);
+                                                            
+           %Need to shift angle wrap so it is in line with where antenna points
+           %when alignment (North or West is performed)
+           tmpval = app.RotatorAlignmentMethodSwitch.Value;
+           %Notes: az (calculated above) is given over the range 0 - 360
+           %degrees. 
+           
+           
+           
+           switch tmpval
+               case 'North'
+                   % In this case, the antenna is pointing west (270
+                   % degrees). In this case, the bias is set to +90 degrees
+                   % to the az value (see app.AzimuthBias field for where
+                   % this is done)
+                   if az > 270
+                       %In this case we want the antenna to point somewhere
+                       %between West and North, so we need to subtract 0ff
+                       %-360 degrees so that we command the rotator to move
+                       %somewhere between 0 and 90
+                      az = az - 360;                                                    
+                   end
+                    
+               case 'West'
+                   if az > 180
+                       az = az - 360;
+                   end
+           end
+           
+           %Calculate rates of change in alt./lat./lon.
+%            newAlt = h;
+%            newLon = lon;
+%            newLat = lat;
+%            newTime = packet_time_gond;
+%            ascentRate = double((newAlt - prevAlt)/(newTime - prevTime));   %[m/s]
+%            lonRate = (newLon - prevLon)*111000*cosd(prevLat)/(newTime-prevTime); %[m/s]
+%            latRate = (newLat - prevLat)*111000/(newTime-prevTime); %[m/s]
+%            horizRate = sqrt(lonRate^2+latRate^2);  %[m/s]
+%            app.AscentRateEst.Text  = num2str(ascentRate,'%.1f');
+%            app.LatRate.Text = num2str(latRate,'%.1f');
+%            app.LonRate.Text = num2str(lonRate,'%.1f');
+%            app.HorizSpeed.Text = num2str(horizRate,'%.1f');                           
+%            prevAlt = h;
+%            prevLon = lon;
+%            prevLat = lat;
+%            prevTime = packet_time_gond;
+           
+           app.ElevationGauge.Value=el;%+str2num(app.ELBiasEditField.Value);
+           app.AzGauge.Value = az;%+app.AzimuthBias.Value+str2num(app.AzBiasEditField.Value);
+           app.sltRange.Text=num2str(range/1000);
+           
+           %Send desired pointing to Arduino-Rotor
+           if (app.flag_GS == 1)
+               app.ConnectingLabel.Text = 'Moving';
+               app.ConnectingLabel.Visible = 'on';
+               if app.ManualButton.Value == 1
+                   % no control
+               elseif app.AzElButton.Value == 1
+                   fprintf(app.serial_GS,'%s\n',['ElAz',num2str(el+str2num(app.ELBiasEditField.Value),'%03.0f'),num2str(az+app.AzimuthBias.Value+str2num(app.AzBiasEditField.Value), '%03.0f')]);
+                   elseif app.AzOnlyButton.Value ==1
+                   fprintf(app.serial_GS,'%s\n',['setAz',num2str(az+app.AzimuthBias.Value+str2num(app.AzBiasEditField.Value), '%03.0f')]);
+                    elseif app.ElOnlyButton.Value ==1
+                   fprintf(app.serial_GS,'%s\n',['setEl',num2str(el+str2num(app.ELBiasEditField.Value),'%03.0f')]);
+               end
+           end
+        end
+    
+    end
+    
+    methods (Static)
+        function userCloserqst
+            disp('Cannot close figure from window. Use _close force_ command in terminal');
+        end
+    end
+    
+
+    % Callbacks that handle component events
+    methods (Access = private)
+
+        % Code that executes after component creation
+        function startupFcn(app)
+            clc
+            if ~isempty(instrfind)
+                fclose(instrfind);
+                delete(instrfind);
+            end    
+            app.RxCOMPortDropDown.Items = cellstr(seriallist);
+            app.GSCOMPortDropDown.Items = app.RxCOMPortDropDown.Items;
+            hold(app.HW_SA_plot, 'on');
+            hold(app.CW_SA_plot, 'on');
+%             datetick(app.Voltage,'x', 'HH:MM:SS');
+            hold(app.alt_horiz2D,'on');
+            hold(app.Location2D,'on');
+            app.myGSCoord = [str2double(app.GS_Latitude.Value), ...
+                str2double(app.GS_Longitude.Value),str2double(app.GS_Altitude.Value)];
+            app.UIFigure.Position = [0 20 1600 850];
+            app.UIFigure.WindowState = 'maximized';
+            app.UIFigure.CloseRequestFcn = @app.userCloserqst;
+            app.UseXBtosetGSPositionButton.Enable = 'off';
+            app.EndTrackingButton.Enable = 'off';
+            app.ManualButton.Value = true;
+            
+            % Create raw data figures
+            app.raw_CWf = figure('Position',[0 0 800 800],'Name','Cold wire raw data','CloseRequestFcn',@app.userCloserqst);
+%             for i = 1:10
+%                 app.axCW(i) = subplot(10,1,i);
+%                 if i == 1
+%                     title('Cold wire raw data');
+%                 end
+%             end
+%             linkaxes(app.axCW,'x');
+            xlabel('Data points');
+            
+            app.raw_HWf = figure('Position',[810 0 800 800],'Name','Hot wire raw data','CloseRequestFcn',@app.userCloserqst);
+%             for i = 1:10
+%                 app.axHW(i) = subplot(10,1,i);
+%                 if i == 1
+%                     title('Hot wire raw data');
+%                 end
+%             end
+%             linkaxes(app.axHW,'x'); 
+            xlabel('Data points');
+            
+        end
+
+        % Button pushed function: BeginTrackingButton
+        function BeginTrackingButtonPushed(app, event)
+            
+            [newfile,path] = uiputfile('*.bin','Create Data File',strcat(datestr(datetime,'yyyy_mm_dd'),'__',datestr(datetime,'HH_MM_SS'),'_data.bin'));
+            figure(app.UIFigure);
+            if newfile == 0
+                return;
+            end
+            filename=fullfile(path,newfile);
+            app.dataFile=fopen(filename,'w+');
+            app.UseXBtosetGSPositionButton.Enable = 'on';
+            app.LaunchTimeButton.Enable = 'on';
+            app.EndTrackingButton.Enable = 'on';
+            app.BeginTrackingButton.Enable = 'off';
+
+            prompt = 'Do you want to select GS position from .mat file?';
+            title = 'GS Position Initialization';
+            answ = questdlg(prompt,title,'Yes','No','Yes');
+            switch answ
+                case 'Yes'
+                    [filename,path] = uigetfile('*.mat','Select GS coord file');
+                    file = fullfile(path,filename);
+                    load(file,'lat0','lon0','h0');
+                    app.GS_Latitude.Value = num2str(lat0,'%.6f');
+                    app.GS_Longitude.Value = num2str(lon0,'%.6f');
+                    app.GS_Altitude.Value = num2str(h0,'%.6f');
+                    disp('GS coordinates loaded successfully...return to app GUI');
+                    set(app.UIFigure,'Visible','on');
+                case 'No'
+                    lat0=app.myGSCoord(1);
+                    lon0=app.myGSCoord(2);
+                    h0=app.myGSCoord(3); 
+            end
+           
+            %Serial for the radio communication or file
+            app.s = serial(app.RxCOMPortDropDown.Value);
+            
+            %Set serial parameters
+            app.s.InputBufferSize = 15000000;
+            set(app.s, 'DataBits', 8);
+            set(app.s, 'StopBits', 1);
+            set(app.s, 'BaudRate', 115200);
+            set(app.s, 'Parity', 'none');
+            
+            %Open the serial port
+            try
+                fopen(app.s);
+                app.ListeningLamp.Color = 'green'; % If serial port opens turn on GUI "listening" light 
+            catch err
+                fclose(app.s);
+                warndlg('Make sure you select the correct Radio COM Port.');
+            end
+
+            id_instr=[hex2dec('C1'),hex2dec('9')]';     %Instrument header
+            id_gond=[hex2dec('D2'),hex2dec('A8')]';     %Gondola header
+            id_raw = [hex2dec('A1'),hex2dec('23')]';     %Raw data header
+            
+            len_instr = 77;                     %instrument packet length
+            len_gond = 66;                      %gondola packet length
+            len_raw = 73;                       %raw packet length
+            
+            binary_file = app.dataFile;
+            tmpsize = max([len_instr,len_gond,len_raw]);
+            messages=zeros(1,tmpsize);      
+            rcvd_packets = 0;
+            rcvd_packets_instr = 0;
+            rcvd_packets_gond = 0;
+            rcvd_packets_raw = 0;
+            lost_packets_instr = 0;
+            lost_packets_gond = 0;
+            lost_packets_raw = 0;
+            lost_packets_unknown = 0;
+            
+            packet_num_instr = 0;
+            packet_num_gond = 0;
+            epoch_idx_raw = nan;
+            record_idx_raw = nan;
+            
+            rawdata_plt = [];       %array that is built using the raw data for plotting
+            
+              
+            %Ascent/Lat/Lon Rate Monitor Variables
+%             prevAlt = 35;
+%             prevLat = double(lat0);
+%             prevLon = double(lon0);
+%             prevTime = 0;
+%             ascentRate = 0;
+            
+            %HW/CW information
+            fvals = [2.5, 5.5, 11.5, 23.5, 47.5, 95.5, 191.5, 383.5, 767.5];    %[Hz] freq. of spectral averaged values
+            
+%             % Initialize timers
+             warn_timer = tic;       %warning light for loss of signal
+             warn_time = datetime;   %date/time format for displaying time since loss of signal
+%             read_case = 0;          %case that controls reading in bytes at serial port
+%             read_timer = tic;       %timer controlling when bytes at serial port are read
+%             raw_case = 0;           %1 if reading in raw data, zero otherwise (this value will change automatically based on incoming packets)
+             warn_lim = 2;           %[seconds]
+            
+            app.loopBreak = 0; % Loop condition -> modified by button push function calls
+            parseFlag = false; % Set initial parseFlag to false (lowered)
+            receiveFlag = false; % Set initial receiveFlag to false (lowered)
+            warnFlag = false; % set warning flag to false (lowered)
+            firstIteration = true; % Flag to only plot GS location once
+            
+            %Read and Process Data
+            while(app.loopBreak == 0)
+                T = tic; % set start of iteration time 
+                if parseFlag % Check if parseFlag has been set true (flag raised) on last iteration
+
+                    
+                          warn_timer = tic; % reset timer for loss of payload warning light
+                    warn_time = datetime;   %date/time format for displaying time since loss of signal - reset time last full packet received
+                    
+                    
+                    %Update bytes at port into, read, and immediately save data with timestamp
+                    % This action removes all bytes from buffer and saves
+                    % to "read_Byte" variable
+                    app.SerialBufferLabel.Text = ['Serial Buffer: ',num2str(app.s.BytesAvailable)]; % Update number of bytes in buffer
+                    
+                    read_Byte = fread(app.s,app.s.BytesAvailable);
+                    fwrite(binary_file, read_Byte);
+                    
+                    rcvd_packets = rcvd_packets+1; % Increment received packets counter
+                    
+                    tmpHead = read_Byte(1:2); % Take first two bytes from buffer to check header
+                    %Check if the packet has been completely received.
+                    % If so, then parse
+                    switch num2str(tmpHead)
+                       case num2str(id_instr)
+                           %------------------------------------
+                           %      Instrument packet
+                           %------------------------------------
+                           % raw_case = 0;    %raw data is not being seen, so read in at the appropriate rate
+                           %Check if full packet was received
+                           if length(read_Byte) >= len_instr
+                               rcvd_packets_instr = rcvd_packets_instr+1;
+                               messages=read_Byte;
+                               
+                               packet_num_instr = swapbytes(typecast(uint8(messages(3:4)),'uint16'));
+                               epoch_idx_instr = swapbytes(typecast(uint8(messages(5:6)),'uint16'));
+                               interval_idx_instr = messages(7);
+                               
+                               lat = double(swapbytes(typecast(uint8(messages(8:11)),'int32')))/10000000;  %[deg]
+                               lon = double(swapbytes(typecast(uint8(messages(12:15)),'int32')))/10000000; %[deg]
+                               h = double(swapbytes(typecast(uint8(messages(16:19)),'int32')))/1000;       %[m]
+                            
+                               GPS_TOW = double(swapbytes(typecast(uint8(messages(20:23)),'uint32')))/1000;    %[s]
+                               GPS_Fix = double(messages(24));
+                               numSats = double(messages(25));
+                               
+                               %Spectral averages
+                               CW_SA_0 = double(swapbytes(typecast(uint8(messages(26:27)),'uint16')))/(-4680)+2;   %[log10(V^2/Hz)]
+                               CW_SA_1 = double(swapbytes(typecast(uint8(messages(28:29)),'uint16')))/(-4680)+2;   %["    "]
+                               CW_SA_2 = double(swapbytes(typecast(uint8(messages(30:31)),'uint16')))/(-4680)+2;
+                               CW_SA_3 = double(swapbytes(typecast(uint8(messages(32:33)),'uint16')))/(-4680)+2;
+                               CW_SA_4 = double(swapbytes(typecast(uint8(messages(34:35)),'uint16')))/(-4680)+2;
+                               CW_SA_5 = double(swapbytes(typecast(uint8(messages(36:37)),'uint16')))/(-4680)+2;
+                               CW_SA_6 = double(swapbytes(typecast(uint8(messages(38:39)),'uint16')))/(-4680)+2;
+                               CW_SA_7 = double(swapbytes(typecast(uint8(messages(40:41)),'uint16')))/(-4680)+2;
+                               CW_SA_8 = double(swapbytes(typecast(uint8(messages(42:43)),'uint16')))/(-4680)+2;
+                                
+                               HW_SA_0 = double(swapbytes(typecast(uint8(messages(44:45)),'uint16')))/(-4680)+2;   %[log10(V^2/Hz)]
+                               HW_SA_1 = double(swapbytes(typecast(uint8(messages(46:47)),'uint16')))/(-4680)+2;   %["    "]
+                               HW_SA_2 = double(swapbytes(typecast(uint8(messages(48:49)),'uint16')))/(-4680)+2;
+                               HW_SA_3 = double(swapbytes(typecast(uint8(messages(50:51)),'uint16')))/(-4680)+2;
+                               HW_SA_4 = double(swapbytes(typecast(uint8(messages(52:53)),'uint16')))/(-4680)+2;
+                               HW_SA_5 = double(swapbytes(typecast(uint8(messages(54:55)),'uint16')))/(-4680)+2;
+                               HW_SA_6 = double(swapbytes(typecast(uint8(messages(56:57)),'uint16')))/(-4680)+2;
+                               HW_SA_7 = double(swapbytes(typecast(uint8(messages(58:59)),'uint16')))/(-4680)+2;
+                               HW_SA_8 = double(swapbytes(typecast(uint8(messages(60:61)),'uint16')))/(-4680)+2;
+                                
+                               % Additional values for CW/HW
+                               CW_meas_Vr1 = messages(62);
+                               CW_meas_Vr2 = messages(63);
+                               CW_meas_Vo1 = double(swapbytes(typecast(uint8(messages(64:65)),'int16')))*2.5/32768;   %[V]
+                               CW_meas_Vo2 = double(swapbytes(typecast(uint8(messages(66:67)),'int16')))*2.5/32768;   %[V]
+                               CW_meas_Cpot = messages(68);
+                               CW_meas_Gpot = messages(69);
+                                
+                               HW_meas_Vr1 = messages(70);
+                               HW_meas_Vr2 = messages(71);
+                               HW_meas_Vo1 = double(swapbytes(typecast(uint8(messages(72:73)),'int16')))*2.5/32768;   %[V]
+                               HW_meas_Vo2 = double(swapbytes(typecast(uint8(messages(74:75)),'int16')))*2.5/32768;   %[V]
+                               HW_meas_Cpot = messages(76);
+                               HW_meas_Gpot = messages(77);
+                               
+                               % -----Update display values----
+                               app.CWVoltageLabel.Text = ['CW Voltage (V): ', num2str(CW_meas_Vo1)];
+                               app.HWVoltageLabel.Text = ['HW Voltage (V): ', num2str(HW_meas_Vo1)];  
+                               app.ElapsedTimeLabel.Text = ['Elapsed Time: ',datestr(datetime - app.startTime,'HH:MM:SS')];
+                               
+                               %Plot CW/HW spectral averages
+                               cla(app.CW_SA_plot);
+                               cla(app.HW_SA_plot);
+                               plot(app.CW_SA_plot,fvals,[CW_SA_0, CW_SA_1, CW_SA_2, CW_SA_3, CW_SA_4, CW_SA_5, CW_SA_6, CW_SA_7, CW_SA_8],'b*');
+                               plot(app.HW_SA_plot,fvals,[HW_SA_0, HW_SA_1, HW_SA_2, HW_SA_3, HW_SA_4, HW_SA_5, HW_SA_6, HW_SA_7, HW_SA_8],'r*');                                        
+                               plot(app.CW_SA_plot,[1 1000],[-6 -6],'--b')
+                               plot(app.HW_SA_plot,[1 1000],[-7 -7],'--r')
+                               %Update GPS fields
+                               updateGPSdata(app,lon,lat,h,lon0,lat0,h0,numSats,GPS_TOW,GPS_Fix);
+                               % firstIteration = false;
+                               % pause(0.00001);
+                           else
+                               lost_packets_instr = lost_packets_instr + 1;     %counter for lost packets (header seen but not full packet)
+                           end  
+                       %end case for id_instr
+                           
+                       case num2str(id_gond)
+                           %------------------------------------
+                           %      Gondola packet
+                           %------------------------------------
+                           % raw_case = 0;    %raw data is not being seen, so read in at the appropriate rate
+                           %Check if full gondola packet was received
+                           if length(read_Byte) >= len_gond
+                               rcvd_packets_gond = rcvd_packets_gond+1;
+                               messages=read_Byte;
+                               
+                               packet_num_gond = swapbytes(typecast(uint8(messages(3:4)),'uint16'));
+                               
+                               epoch_idx_gond = swapbytes(typecast(uint8(messages(5:6)),'uint16'));
+                               
+                               lat = double(swapbytes(typecast(uint8(messages(7:10)),'int32')))/10000000;  %[deg]
+                               lon = double(swapbytes(typecast(uint8(messages(11:14)),'int32')))/10000000; %[deg]
+                               h = double(swapbytes(typecast(uint8(messages(15:18)),'int32')))/1000;       %[m]
+                            
+                               GPS_TOW = double(swapbytes(typecast(uint8(messages(19:22)),'uint32')))/1000;    %[s]
+                               GPS_Fix = double(messages(23));
+                               numSats = double(messages(24));
+                               
+                               %Battery monitor
+                               batt_mon = double(messages(25));    %counts
+                               batt_mon = ((batt_mon*2048/256)+2048)*6.6/4096;    %[V] Battery voltage
+                               
+                               %Gondola status
+                               stat_gond = double(messages(26));
+                               
+                               %RS41 data
+                               RS41_temp = swapbytes(typecast(uint8(messages(27:28)),'int16'));
+                               RS41_hum = swapbytes(typecast(uint8(messages(29:30)),'uint16'));
+                               RS41_pres = swapbytes(typecast(uint8(messages(31:32)),'uint16'));
+                               RS41_stat = swapbytes(typecast(uint8(messages(33:34)),'uint16'));
+                                
+                               %Ambient/interior temperature data
+                               Ta1 = double(swapbytes(typecast(uint8(messages(35:36)),'uint16')))/655.36 - 60;     %[degC]
+                               Ti1 = double(swapbytes(typecast(uint8(messages(37:38)),'uint16')))/655.36 - 60;     %[degC]
+                               Ta2 = double(swapbytes(typecast(uint8(messages(39:40)),'uint16')))/655.36 - 60;     %[degC]
+                               Ti2 = double(swapbytes(typecast(uint8(messages(41:42)),'uint16')))/655.36 - 60;     %[degC]
+                                
+                               %Cold wire data
+                               CW_chop_Vr1 = messages(43);
+                               CW_chop_Vr2 = messages(44);
+                               CW_chop_Vo1 = swapbytes(typecast(uint8(messages(45:46)),'uint16'));
+                               CW_chop_Vo2 = swapbytes(typecast(uint8(messages(47:48)),'uint16'));
+                               CW_chop_Cpot = messages(49);
+                               CW_chop_Gpot = messages(50);
+                                
+                               %GPS vel
+                               GPS_N_vel = double(swapbytes(typecast(uint8(messages(51:52)),'int16')))/100;   %[m/s]
+                               GPS_E_vel = double(swapbytes(typecast(uint8(messages(53:54)),'int16')))/100;   %[m/s]
+                               GPS_D_vel = double(swapbytes(typecast(uint8(messages(55:56)),'int16')))/100;   %[m/s]
+                                
+                               %Hot wire data
+                               HW_chop_Vr1 = messages(57);
+                               HW_chop_Vr2 = messages(58);
+                               HW_chop_Vo1 = swapbytes(typecast(uint8(messages(59:60)),'uint16'));
+                               HW_chop_Vo2 = swapbytes(typecast(uint8(messages(61:62)),'uint16'));
+                               HW_chop_Cpot = messages(63);
+                               HW_chop_Gpot = messages(64);
+                               
+                               %RMS GPS velocities
+                               RMS_horiz_vel = double(messages(65));
+                               RMS_vert_vel = double(messages(66));
+                                
+                                
+                               %----------Update display values-------------------------
+                               app.BatteryVoltageLabel.Text =  ['Battery Voltage [V]): ', num2str(batt_mon)];                                      
+                               app.Ambient1degCLabel.Text = ['Ambient 1 (degC): ', num2str(Ta1,'%.1f')];
+                               app.Ambient2degCLabel.Text = ['Ambient 2 (degC): ', num2str(Ta2,'%.1f')];
+                               app.Internal1degCLabel.Text = ['Internal 1 (degC): ', num2str(Ti1,'%.1f')];
+                               app.Internal2degCLabel.Text = ['Internal 2 (degC): ', num2str(Ti2,'%.1f')];
+                               app.RMShorizvelLabel.Text = ['RMS Horiz. Vel (m/s): ', num2str(RMS_horiz_vel,'%.2f')];
+                               app.RMSvertvelLabel.Text = ['RMS Vert. Vel (m/s): ', num2str(RMS_vert_vel,'%.2f')];
+                               app.ElapsedTimeLabel.Text = ['Elapsed Time: ',datestr(datetime - app.startTime,'HH:MM:SS')];
+                              
+                               app.AscentRateGPS.Text  = num2str(-GPS_D_vel,'%.1f');
+                               app.LatRate.Text = num2str(GPS_N_vel,'%.1f');
+                               app.LonRate.Text = num2str(GPS_E_vel,'%.1f');
+                               horizRate = sqrt(GPS_N_vel^2 + GPS_E_vel^2);
+                               app.HorizSpeed.Text = num2str(horizRate,'%.1f');
+
+                               %Vent valve indicator
+                               if stat_gond == 0
+                                   app.NoStatusLamp.Color = 'green';
+                                   app.VentclosedLamp.Color = 'white';
+                                   app.VentopenLamp.Color = 'white';
+                               elseif stat_gond ==1
+                                   app.NoStatusLamp.Color = 'white';
+                                   app.VentclosedLamp.Color = 'green';
+                                   app.VentopenLamp.Color = 'white'; 
+                               elseif stat_gond == 2
+                                   app.NoStatusLamp.Color = 'white';
+                                   app.VentclosedLamp.Color = 'white';
+                                   app.VentopenLamp.Color = 'green'; 
+                               end
+                               
+                               %Update GPS fields
+                               updateGPSdata(app,lon,lat,h,lon0,lat0,h0,numSats,GPS_TOW,GPS_Fix);
+                               app.plot_GPS_data = true;
+                               % firstIteration = false;
+
+                               % pause(0.00001);
+                           else
+                               lost_packets_gond = lost_packets_gond + 1;   % gondola header seen but not complete packet
+                           end
+                           %end case for id_gond
+                        otherwise
+                            lost_packets_unknown = lost_packets_unknown + 1;
+
+                    end
+                    
+                    %%% END OF SWITCHING ON HEADER VALUE %%%
+                    
+                    parseFlag = false; % reset parse flag to false for next iteration
+  
+                    %%%%% UPDATE PACKET INFO VALUES TO SCREEN
+                    %Print received and lost packets information
+                    if (rcvd_packets_gond == 1)
+                        app.GondPacket_start.Text = ['Starting packet # (gond): ', num2str(packet_num_gond)];
+                    elseif (rcvd_packets_instr == 1)
+                        app.InstrPacket_start.Text = ['Starting packet # (instr): ', num2str(packet_num_instr)];
+                    elseif (rcvd_packets_raw == 1)
+                        app.RawPacket_start.Text = ['Starting epoch # (raw): ', num2str(epoch_idx_raw)];
+                    end
+                    lost_total = lost_packets_gond + lost_packets_instr + lost_packets_raw + lost_packets_unknown;
+                    app.ReceivedPackets.Text = ['Received Packets: ',num2str(rcvd_packets)];
+                    app.LostPackets.Text = ['Lost Packets: ',num2str(lost_total)];
+                    app.LossesLabel.Text = ['%Losses: ',num2str(100*(lost_total)/(lost_total+rcvd_packets))];                
+                    
+                    app.InstrPacket_now.Text = ['Current packet # (instr): ', num2str(packet_num_instr)];
+                    app.GondPacket_now.Text = ['Current packet # (gond): ', num2str(packet_num_gond)];
+                    
+                    app.EpochIdxrawLabel.Text = ['Current epoch # (raw): ', num2str(epoch_idx_raw)];
+                    app.RecordIdxrawLabel.Text = ['Current record # (raw): ', num2str(record_idx_raw)];
+                    
+                    app.GondolapacketsLabel.Text = ['Gondola packets: ',num2str(rcvd_packets_gond),' of ',num2str(rcvd_packets_gond + lost_packets_gond),' received'];
+                    app.InstrpacketsLabel.Text = ['Instr. packets: ',num2str(rcvd_packets_instr),' of ',num2str(rcvd_packets_instr + lost_packets_instr),' received'];
+                    app.RawpacketsLabel.Text = ['Raw. packets: ',num2str(rcvd_packets_raw),' of ',num2str(rcvd_packets_raw + lost_packets_raw),' received'];
+%                     A = toc(warn_timer);
+%                     % pause(0.00001);
+%                     while A<0.1
+%                         A = toc(warn_timer);
+%                     end
+                    
+                    
+                    
+                end
+                
+                %%%%% END OF READ/PARSE - IF parseFlag NOT RAISED ON LAST
+                %%%%% ITERATION THE LOOP WILL SKIP TO HERE:
+                timeHolder = toc(T);
+                while( timeHolder < 0.1) % Wait
+                    timeHolder = toc(T);
+                end
+
+                if app.s.BytesAvailable > 1 % Check if any bytes available at port
+                    parseFlag = true; % raise flag to parse on next iteration;
+                    receiveFlag = true; % set flag to turn on receiving light  
+                    warnFlag = false;
+                elseif toc(warn_timer) > warn_lim % if warning light timer has exceeded pre-set interval
+                    warnFlag = true; % set flag to turn on warning light
+                    parseFlag = false; % raise flag to parse on next iteration;
+                    receiveFlag = false; % set flag to turn on receiving light  
+                end
+%                 
+%                 timeHolder = toc(T);
+%                 while( timeHolder < 0.12) % Wait
+%                     timeHolder = toc(T);
+%                 end    
+                
+                % Turn on appropriate light:
+                
+                if warnFlag
+                    app.LastreceivedLabel.Text = ['Last Received: ',datestr(datetime - warn_time,'HH:MM:SS')]; % update last received time for warning light indicator
+                    app.SerialBufferLabel.Text = ['Serial Buffer: ',num2str(app.s.BytesAvailable)]; % Update number of bytes in buffer
+                    warnFlag = false; % re-set warning flag
+                    app.NosignalLamp.Color = 'red'; % Pull warning light high
+                    
+                elseif receiveFlag
+                    app.LastreceivedLabel.Text = ['Last Received: ',datestr('00:00:00','HH:MM:SS')];% update last received time for warning light indicator
+                    receiveFlag = false; % re-set receive flag
+                    app.ReceivingLamp.Color = 'green'; % Turn on receiving light 
+                end
+
+                
+                % Delays for loop timing:
+                pause(0.27); % wait 
+                app.ReceivingLamp.Color = 'white'; % Turn off receiving light
+                app.NosignalLamp.Color = 'white'; % Pull warning light low 
+                pause(0.27); % wait 
+                
+                %%%%%%%%%%%%%% Loop timing now implemented with delays of
+                %%%%%%%%%%%%%% 0.5 seconds - this breaks raw reading
+                %%%%%%%%%%%%%% functionality for now, so RAW PARSING
+                %%%%%%%%%%%%%% SECTION DELETED!!!
+%                 A = toc(T);
+%                 display(A);
+            end
+            %---------------------------------
+                
+
+        end
+
+        % Button pushed function: ConnectGSButton
+        function ConnectGSButtonPushed(app, event)
+            % Initialize Serial Communication with Arduino and MATLAB.
+            % The Arduino sends a Char and waits for MATLAB to respond with the proper
+            % Char. If no errors, setup ok indication is visible.
+            
+            app.flag_GS = 1;
+            
+            app.serial_GS = serial(app.GSCOMPortDropDown.Value);
+            
+            set(app.ConnectingLabel,'Visible', 'on');
+            
+            %Set serial parameters
+            app.serial_GS.InputBufferSize = 300000;
+            set(app.serial_GS, 'DataBits', 8);
+            set(app.serial_GS, 'StopBits', 1);
+            set(app.serial_GS, 'BaudRate', 230400);
+            set(app.serial_GS, 'Parity', 'none');
+            
+            %Open the serial port
+            try
+                fopen(app.serial_GS);
+            catch err
+                fclose(app.serial_GS);
+                error('Make sure you select the correct Arduino COM Port.');
+                
+            end
+            
+            set(app.ConnectGSButton,'Enable','off');
+            set(app.DisconnectGSButton,'Enable','on');
+            while (app.serial_GS.BytesAvailable == 0)
+                
+            end
+            a=fscanf(app.serial_GS,'%e');
+            fprintf(app.serial_GS,'%s\n','getAz');
+            
+            while (app.serial_GS.BytesAvailable == 0)
+                
+            end
+            
+            app.AzGauge.Value = fscanf(app.serial_GS,'%e');
+            
+            fprintf(app.serial_GS,'%s\n','getEl');
+            while (app.serial_GS.BytesAvailable == 0)
+            end
+            
+            app.ElevationGauge.Value = fscanf(app.serial_GS,'%e');
+            
+            set(app.ConnectingLabel,'Visible', 'off');
+            
+            %After connection allow gps polling
+            %set(app.AutoButton,'Enable','on');
+            
+            app.BeginTrackingButton.Enable='on';
+            
+            
+        end
+
+        % Button pushed function: DisconnectGSButton
+        function DisconnectGSButtonPushed(app, event)
+            
+            
+            fclose(app.serial_GS);
+            delete(app.serial_GS);
+            clear app.serial_GS;
+            set(app.ConnectGSButton,'Enable','on')
+            set(app.ConnectingLabel,'Visible', 'off');
+            set(app.DisconnectGSButton,'Enable','off');
+            %set(app.OKLabel,'Visible','off');
+            
+            
+        end
+
+        % Close request function: UIFigure
+        function UIFigureCloseRequest(app, event)
+            delete(instrfindall);
+            delete(app)
+            
+        end
+
+        % Value changed function: GSCOMPortDropDown
+        function GSCOMPortDropDownValueChanged(app, event)
+            app.GSCOMPortDropDown.Items = cellstr(seriallist);
+            app.RxCOMPortDropDown.Items = app.GSCOMPortDropDown.Items;
+            
+        end
+
+        % Value changed function: RxCOMPortDropDown
+        function RXCOMPortDropDownValueChanged(app, event)
+            app.RxCOMPortDropDown.Items = cellstr(seriallist);
+            app.GSCOMPortDropDown.Items = app.RxCOMPortDropDown.Items;
+        end
+
+        % Menu selected function: RefreshCOMPortsMenu
+        function RefreshCOMPortsMenuSelected(app, event)
+            if ~isempty(instrfind)
+                fclose(instrfind);
+                delete(instrfind);
+            end    
+        
+            app.RxCOMPortDropDown.Items = cellstr(seriallist);
+            app.GSCOMPortDropDown.Items = app.RxCOMPortDropDown.Items;
+        end
+
+        % Button pushed function: LaunchTimeButton
+        function LaunchTimeButtonPushed(app, event)
+            app.startTime = datetime;
+            app.LaunchTimeLabel.Text = ['Launch Time: ',datestr(app.startTime, 'HH:MM:SS')];
+            app.LaunchTimeButton.Enable = 'off';
+        end
+
+        % Button pushed function: EndTrackingButton
+        function EndTrackingButtonPushed(app, event)
+            prompt = {'Stop reading in data?'};
+            title = 'Are you sure?';
+            answ = questdlg(prompt,title,'Yes','No','No');
+            switch answ
+                case 'Yes'  
+                    %Serial for the radio communication or file
+                    fclose(app.s);
+                    app.loopBreak = 1;
+                    app.BeginTrackingButton.Enable = 'on';
+                    app.EndTrackingButton.Enable = 'off';
+                    app.ListeningLamp.Color = 'white';
+                    app.UseXBtosetGSPositionButton.Enable = 'off';
+            end
+            
+        end
+
+        % Button pushed function: UseXBtosetGSPositionButton
+        function UseXBtosetGSPositionButtonPushed(app, event)
+            % Decide to update GS location
+            prompt = {'Would you like to update GS location with?'; strcat('Lat: ',app.gpsLAT.Text,'  Lon: ', app.gpsLONG.Text,'   h [m MSL]: ', app.gpsALT.Text)};
+            title = 'GPS location of GS';
+            answ = questdlg(prompt,title,'Yes','No','Yes');
+            switch answ
+                case 'Yes'  
+                    app.set_GS_loc = true; % Set logical check to true if deciding to plot GS for first time
+                    lat0 = str2num(app.gpsLAT.Text);
+                    lon0 = str2num(app.gpsLONG.Text);
+                    h0 = str2num(app.gpsALT.Text);
+                
+                    app.GS_Latitude.Value = num2str(lat0,'%.6f');
+                    app.GS_Longitude.Value = num2str(lon0,'%.6f');
+                    app.GS_Altitude.Value = num2str(h0,'%.6f');
+                    
+                    app.myGSCoord(1) = lat0;
+                    app.myGSCoord(2) = lon0;
+                    app.myGSCoord(3) = h0;
+                    
+                    cla(app.Location2D);
+                    cla(app.alt_horiz2D);
+                    
+                    [newfile,path] = uiputfile('*.mat','Create GS Coordinates File','GS_coord.mat');
+                    file = fullfile(path,newfile);
+                    save(file,'lat0','lon0','h0');
+                    disp('GS coordinates saved successfully...return to app GUI');
+                    set(app.UIFigure,'Visible','on');
+                
+                case 'No'
+                    %Do nothing                                              
+            end
+        
+        end
+
+        % Value changed function: RotatorAlignmentMethodSwitch
+        function RotatorAlignmentMethodSwitchValueChanged(app, event)
+            value = app.RotatorAlignmentMethodSwitch.Value;
+            
+            switch value
+                case 'North'
+                    app.AzimuthBias.Value = 90;
+                case 'West'
+                    app.AzimuthBias.Value = 180;
+            end
+            
+        end
+
+        % Size changed function: AntenaTrackingModeButtonGroup
+        function AntenaTrackingModeButtonGroupSizeChanged(app, event)
+            position = app.AntenaTrackingModeButtonGroup.Position;
+            
+        end
+
+        % Button pushed function: LockalignmentButton
+        function LockalignmentButtonPushed(app, event)
+            app.RotatorAlignmentMethodSwitch.Enable = 'off';
+            app.LockalignmentButton.Enable = 'off';                       
+        end
+
+        % Value changed function: StopCloseButton
+        function StopCloseButtonValueChanged(app, event)
+            prompt = {'Stop data collection, save data, and close all windows?'};
+            title = 'Are you sure?';
+            answ = questdlg(prompt,title,'Yes','No','No');
+            switch answ
+                case 'Yes'  
+                    app.StopCloseButton.BackgroundColor = 'red';
+                    app.StopCloseButton.Text = 'Stopped';
+                    app.ListeningLamp.Color = 'white';
+                    pause(1);
+                    app.loopBreak = 1;
+                    close all force                   
+                case 'No'
+                    app.StopCloseButton.Value = false;
+            end
+        end
+    end
+
+    % Component initialization
+    methods (Access = private)
+
+        % Create UIFigure and components
+        function createComponents(app)
+
+            % Create UIFigure and hide until all components are created
+            app.UIFigure = uifigure('Visible', 'off');
+            app.UIFigure.Position = [0 0 1600 847];
+            app.UIFigure.Name = 'UI Figure';
+            app.UIFigure.CloseRequestFcn = createCallbackFcn(app, @UIFigureCloseRequest, true);
+
+            % Create ConfigureMenu
+            app.ConfigureMenu = uimenu(app.UIFigure);
+            app.ConfigureMenu.Text = 'Configure';
+
+            % Create RefreshCOMPortsMenu
+            app.RefreshCOMPortsMenu = uimenu(app.ConfigureMenu);
+            app.RefreshCOMPortsMenu.MenuSelectedFcn = createCallbackFcn(app, @RefreshCOMPortsMenuSelected, true);
+            app.RefreshCOMPortsMenu.Accelerator = 'R';
+            app.RefreshCOMPortsMenu.Text = 'Refresh COM Ports';
+
+            % Create LoadMapsMenu
+            app.LoadMapsMenu = uimenu(app.ConfigureMenu);
+            app.LoadMapsMenu.Accelerator = 'M';
+            app.LoadMapsMenu.Text = 'Load Maps';
+
+            % Create LoadPredictionFileMenu
+            app.LoadPredictionFileMenu = uimenu(app.ConfigureMenu);
+            app.LoadPredictionFileMenu.Enable = 'off';
+            app.LoadPredictionFileMenu.Accelerator = 'P';
+            app.LoadPredictionFileMenu.Text = 'Load Prediction File';
+
+            % Create alt_horiz2D
+            app.alt_horiz2D = uiaxes(app.UIFigure);
+            title(app.alt_horiz2D, 'Vertical Position')
+            xlabel(app.alt_horiz2D, 'Horizontal Dist. (km)')
+            ylabel(app.alt_horiz2D, 'Altitude (km)')
+            app.alt_horiz2D.DataAspectRatio = [1 1 1];
+            app.alt_horiz2D.PlotBoxAspectRatio = [200 40 1];
+            app.alt_horiz2D.FontSize = 11;
+            app.alt_horiz2D.XLim = [0 200];
+            app.alt_horiz2D.YLim = [0 40];
+            app.alt_horiz2D.GridAlpha = 0.25;
+            app.alt_horiz2D.Box = 'on';
+            app.alt_horiz2D.XTick = [0 50 100 150 200];
+            app.alt_horiz2D.XTickLabel = {'0'; '50'; '100'; '150'; '200'};
+            app.alt_horiz2D.YTick = [0 10 20 30 40];
+            app.alt_horiz2D.Color = [0.9412 0.9412 0.9412];
+            app.alt_horiz2D.NextPlot = 'add';
+            app.alt_horiz2D.XGrid = 'on';
+            app.alt_horiz2D.XMinorGrid = 'on';
+            app.alt_horiz2D.YGrid = 'on';
+            app.alt_horiz2D.Position = [7 562 794 340];
+
+            % Create Location2D
+            app.Location2D = uiaxes(app.UIFigure);
+            title(app.Location2D, '2D position')
+            xlabel(app.Location2D, 'Lon (km)')
+            ylabel(app.Location2D, 'Lat (km)')
+            app.Location2D.DataAspectRatio = [1 1 1];
+            app.Location2D.PlotBoxAspectRatio = [1 1 1];
+            app.Location2D.FontSize = 11;
+            app.Location2D.Color = [0.902 0.902 0.902];
+            app.Location2D.NextPlot = 'add';
+            app.Location2D.XGrid = 'on';
+            app.Location2D.YGrid = 'on';
+            app.Location2D.Position = [822 528 391 310];
+
+            % Create ElevationGauge
+            app.ElevationGauge = uigauge(app.UIFigure, 'semicircular');
+            app.ElevationGauge.Limits = [0 180];
+            app.ElevationGauge.MajorTicks = [0 45 90 135 180];
+            app.ElevationGauge.ScaleColors = [0.470588235294118 0.670588235294118 0.188235294117647];
+            app.ElevationGauge.ScaleColorLimits = [0 4];
+            app.ElevationGauge.Position = [15 448 118 64];
+
+            % Create AzGauge
+            app.AzGauge = uigauge(app.UIFigure, 'linear');
+            app.AzGauge.Limits = [0 360];
+            app.AzGauge.MajorTicks = [0 45 90 135 180 225 270 315 360];
+            app.AzGauge.ScaleColors = [0.470588235294118 0.670588235294118 0.188235294117647];
+            app.AzGauge.ScaleColorLimits = [0 5];
+            app.AzGauge.Position = [163 448 302 40];
+
+            % Create CW_SA_plot
+            app.CW_SA_plot = uiaxes(app.UIFigure);
+            title(app.CW_SA_plot, 'CW Spectral Averages')
+            xlabel(app.CW_SA_plot, 'Frequency (Hz)')
+            ylabel(app.CW_SA_plot, 'log10(PSD)')
+            app.CW_SA_plot.PlotBoxAspectRatio = [1.69333333333333 1 1];
+            app.CW_SA_plot.XLim = [1 1000];
+            app.CW_SA_plot.YLim = [-12 2];
+            app.CW_SA_plot.XTick = [1 10 100 1000];
+            app.CW_SA_plot.XTickLabel = {'10^{0}'; '10^{1}'; '10^{2}'; '10^{3}'};
+            app.CW_SA_plot.XMinorTick = 'on';
+            app.CW_SA_plot.YTick = [-12 -11 -10 -9 -8 -7 -6 -5 -4 -3 -2 -1 0 1 2];
+            app.CW_SA_plot.YTickLabel = {'-12'; '-11'; '-10'; '-9'; '-8'; '-7'; '-6'; '-5'; '-4'; '-3'; '-2'; '-1'; '0'; '1'; '2'};
+            app.CW_SA_plot.NextPlot = 'add';
+            app.CW_SA_plot.XGrid = 'on';
+            app.CW_SA_plot.XMinorGrid = 'on';
+            app.CW_SA_plot.YGrid = 'on';
+            app.CW_SA_plot.XScale = 'log';
+            app.CW_SA_plot.Position = [1177 574 412 274];
+
+            % Create sltRange
+            app.sltRange = uilabel(app.UIFigure);
+            app.sltRange.VerticalAlignment = 'top';
+            app.sltRange.Position = [390 497 75 22];
+            app.sltRange.Text = '0';
+
+            % Create RangekmLabel
+            app.RangekmLabel = uilabel(app.UIFigure);
+            app.RangekmLabel.HorizontalAlignment = 'center';
+            app.RangekmLabel.VerticalAlignment = 'top';
+            app.RangekmLabel.Position = [308 496 74 22];
+            app.RangekmLabel.Text = 'Range (km):';
+
+            % Create MapRadiusLabel
+            app.MapRadiusLabel = uilabel(app.UIFigure);
+            app.MapRadiusLabel.VerticalAlignment = 'top';
+            app.MapRadiusLabel.Visible = 'off';
+            app.MapRadiusLabel.Position = [520 826 70 15];
+            app.MapRadiusLabel.Text = 'Map Radius';
+
+            % Create radius
+            app.radius = uilabel(app.UIFigure);
+            app.radius.VerticalAlignment = 'top';
+            app.radius.Visible = 'off';
+            app.radius.Position = [627 826 26 15];
+            app.radius.Text = '200';
+
+            % Create kmLabel
+            app.kmLabel = uilabel(app.UIFigure);
+            app.kmLabel.VerticalAlignment = 'top';
+            app.kmLabel.Visible = 'off';
+            app.kmLabel.Position = [590 819 29 22];
+            app.kmLabel.Text = '(km)';
+
+            % Create BatteryVoltageLabel
+            app.BatteryVoltageLabel = uilabel(app.UIFigure);
+            app.BatteryVoltageLabel.VerticalAlignment = 'top';
+            app.BatteryVoltageLabel.Position = [917 207 175 22];
+            app.BatteryVoltageLabel.Text = 'Battery Voltage: ';
+
+            % Create AscentRateGPS
+            app.AscentRateGPS = uilabel(app.UIFigure);
+            app.AscentRateGPS.BackgroundColor = [1 1 1];
+            app.AscentRateGPS.HorizontalAlignment = 'right';
+            app.AscentRateGPS.VerticalAlignment = 'top';
+            app.AscentRateGPS.Position = [765 503 76 15];
+            app.AscentRateGPS.Text = '';
+
+            % Create ADRateGPSLabel
+            app.ADRateGPSLabel = uilabel(app.UIFigure);
+            app.ADRateGPSLabel.VerticalAlignment = 'top';
+            app.ADRateGPSLabel.Position = [657 496 108 22];
+            app.ADRateGPSLabel.Text = 'Vertical Rate (m/s):';
+
+            % Create HW_SA_plot
+            app.HW_SA_plot = uiaxes(app.UIFigure);
+            title(app.HW_SA_plot, 'HW Spectral Averages')
+            xlabel(app.HW_SA_plot, 'Frequency (Hz)')
+            ylabel(app.HW_SA_plot, 'log10(PSD)')
+            app.HW_SA_plot.PlotBoxAspectRatio = [1.69333333333333 1 1];
+            app.HW_SA_plot.XLim = [1 1000];
+            app.HW_SA_plot.YLim = [-12 2];
+            app.HW_SA_plot.XTick = [1 10 100 1000];
+            app.HW_SA_plot.XTickLabel = {'10^{0}'; '10^{1}'; '10^{2}'; '10^{3}'};
+            app.HW_SA_plot.XMinorTick = 'on';
+            app.HW_SA_plot.YTick = [-12 -11 -10 -9 -8 -7 -6 -5 -4 -3 -2 -1 0 1 2];
+            app.HW_SA_plot.YTickLabel = {'-12'; '-11'; '-10'; '-9'; '-8'; '-7'; '-6'; '-5'; '-4'; '-3'; '-2'; '-1'; '0'; '1'; '2'};
+            app.HW_SA_plot.NextPlot = 'add';
+            app.HW_SA_plot.XGrid = 'on';
+            app.HW_SA_plot.XMinorGrid = 'on';
+            app.HW_SA_plot.YGrid = 'on';
+            app.HW_SA_plot.XScale = 'log';
+            app.HW_SA_plot.Position = [1177 291 412 274];
+
+            % Create HWVoltageLabel
+            app.HWVoltageLabel = uilabel(app.UIFigure);
+            app.HWVoltageLabel.Position = [917 239 189 22];
+            app.HWVoltageLabel.Text = 'HW Voltage:';
+
+            % Create CWVoltageLabel
+            app.CWVoltageLabel = uilabel(app.UIFigure);
+            app.CWVoltageLabel.Position = [917 260 175 22];
+            app.CWVoltageLabel.Text = 'CW Voltage:';
+
+            % Create TemperaturesLabel
+            app.TemperaturesLabel = uilabel(app.UIFigure);
+            app.TemperaturesLabel.FontWeight = 'bold';
+            app.TemperaturesLabel.Position = [917 410 88 22];
+            app.TemperaturesLabel.Text = 'Temperatures:';
+
+            % Create Ambient1degCLabel
+            app.Ambient1degCLabel = uilabel(app.UIFigure);
+            app.Ambient1degCLabel.Position = [917 389 227 22];
+            app.Ambient1degCLabel.Text = 'Ambient 1 (degC):';
+
+            % Create Ambient2degCLabel
+            app.Ambient2degCLabel = uilabel(app.UIFigure);
+            app.Ambient2degCLabel.Position = [917 368 227 22];
+            app.Ambient2degCLabel.Text = 'Ambient 2 (degC):';
+
+            % Create Internal1degCLabel
+            app.Internal1degCLabel = uilabel(app.UIFigure);
+            app.Internal1degCLabel.Position = [917 347 227 22];
+            app.Internal1degCLabel.Text = 'Internal 1 (degC):';
+
+            % Create Internal2degCLabel
+            app.Internal2degCLabel = uilabel(app.UIFigure);
+            app.Internal2degCLabel.Position = [917 326 241 22];
+            app.Internal2degCLabel.Text = 'Internal 2 (degC):';
+
+            % Create InstructionsLabel
+            app.InstructionsLabel = uilabel(app.UIFigure);
+            app.InstructionsLabel.HorizontalAlignment = 'right';
+            app.InstructionsLabel.Position = [918 95 70 22];
+            app.InstructionsLabel.Text = 'Instructions:';
+
+            % Create InstructionsTextArea
+            app.InstructionsTextArea = uitextarea(app.UIFigure);
+            app.InstructionsTextArea.Editable = 'off';
+            app.InstructionsTextArea.Position = [1003 7 393 110];
+            app.InstructionsTextArea.Value = {'1. Refresh COM ports '; '2. Select COM ports'; '2. Select ''Connect GS'''; '3. Select ''Begin Tracking'''; '4. Wait for GPS acquisition, then select ''Use XB to set GS position'''; '5. Select ''Load Position'' to load map (optional)'; '6. Verify alignment choice is correct'};
+
+            % Create VentvalveinfoLabel
+            app.VentvalveinfoLabel = uilabel(app.UIFigure);
+            app.VentvalveinfoLabel.Position = [495 503 87 22];
+            app.VentvalveinfoLabel.Text = 'Vent valve info:';
+
+            % Create NosignalLampLabel
+            app.NosignalLampLabel = uilabel(app.UIFigure);
+            app.NosignalLampLabel.HorizontalAlignment = 'right';
+            app.NosignalLampLabel.FontWeight = 'bold';
+            app.NosignalLampLabel.Position = [1420 125 60 22];
+            app.NosignalLampLabel.Text = 'No signal';
+
+            % Create NosignalLamp
+            app.NosignalLamp = uilamp(app.UIFigure);
+            app.NosignalLamp.Position = [1495 94 83 83];
+            app.NosignalLamp.Color = [1 1 1];
+
+            % Create StopCloseButton
+            app.StopCloseButton = uibutton(app.UIFigure, 'state');
+            app.StopCloseButton.ValueChangedFcn = createCallbackFcn(app, @StopCloseButtonValueChanged, true);
+            app.StopCloseButton.Text = 'Stop & Close';
+            app.StopCloseButton.BackgroundColor = [0.9882 0.6784 0.6745];
+            app.StopCloseButton.FontSize = 18;
+            app.StopCloseButton.Position = [1465 13 124 48];
+
+            % Create LatRate
+            app.LatRate = uilabel(app.UIFigure);
+            app.LatRate.BackgroundColor = [1 1 1];
+            app.LatRate.HorizontalAlignment = 'right';
+            app.LatRate.VerticalAlignment = 'top';
+            app.LatRate.Position = [765 482 76 15];
+            app.LatRate.Text = '';
+
+            % Create LatRateLabel
+            app.LatRateLabel = uilabel(app.UIFigure);
+            app.LatRateLabel.VerticalAlignment = 'top';
+            app.LatRateLabel.Position = [667 475 98 22];
+            app.LatRateLabel.Text = 'North Rate (m/s):';
+
+            % Create LonRate
+            app.LonRate = uilabel(app.UIFigure);
+            app.LonRate.BackgroundColor = [1 1 1];
+            app.LonRate.HorizontalAlignment = 'right';
+            app.LonRate.VerticalAlignment = 'top';
+            app.LonRate.Position = [765 460 76 15];
+            app.LonRate.Text = '';
+
+            % Create LonRateLabel
+            app.LonRateLabel = uilabel(app.UIFigure);
+            app.LonRateLabel.VerticalAlignment = 'top';
+            app.LonRateLabel.Position = [672 453 92 22];
+            app.LonRateLabel.Text = 'East Rate (m/s):';
+
+            % Create HorizSpeed
+            app.HorizSpeed = uilabel(app.UIFigure);
+            app.HorizSpeed.BackgroundColor = [1 1 1];
+            app.HorizSpeed.HorizontalAlignment = 'right';
+            app.HorizSpeed.VerticalAlignment = 'top';
+            app.HorizSpeed.Position = [766 438 76 15];
+            app.HorizSpeed.Text = '';
+
+            % Create HorizSpeedLabel
+            app.HorizSpeedLabel = uilabel(app.UIFigure);
+            app.HorizSpeedLabel.VerticalAlignment = 'top';
+            app.HorizSpeedLabel.Position = [633 431 132 22];
+            app.HorizSpeedLabel.Text = 'Horizontal Speed (m/s):';
+
+            % Create LastreceivedLabel
+            app.LastreceivedLabel = uilabel(app.UIFigure);
+            app.LastreceivedLabel.VerticalAlignment = 'top';
+            app.LastreceivedLabel.Position = [1410 65 168 22];
+            app.LastreceivedLabel.Text = 'Last received:';
+
+            % Create AntennaTuningParametersPanel
+            app.AntennaTuningParametersPanel = uipanel(app.UIFigure);
+            app.AntennaTuningParametersPanel.Title = 'Antenna Tuning Parameters';
+            app.AntennaTuningParametersPanel.Position = [7 6 371 209];
+
+            % Create AtzeroELbiasantennaangleat8degLabel
+            app.AtzeroELbiasantennaangleat8degLabel = uilabel(app.AntennaTuningParametersPanel);
+            app.AtzeroELbiasantennaangleat8degLabel.Position = [197 123 141 28];
+            app.AtzeroELbiasantennaangleat8degLabel.Text = {'(At zero EL bias, antenna'; 'angle at -8 deg)'};
+
+            % Create ELBiasEditFieldLabel
+            app.ELBiasEditFieldLabel = uilabel(app.AntennaTuningParametersPanel);
+            app.ELBiasEditFieldLabel.HorizontalAlignment = 'right';
+            app.ELBiasEditFieldLabel.VerticalAlignment = 'top';
+            app.ELBiasEditFieldLabel.Position = [172 151 65 22];
+            app.ELBiasEditFieldLabel.Text = 'EL Bias';
+
+            % Create ELBiasEditField
+            app.ELBiasEditField = uieditfield(app.AntennaTuningParametersPanel, 'text');
+            app.ELBiasEditField.HorizontalAlignment = 'right';
+            app.ELBiasEditField.Position = [249 154 61 22];
+            app.ELBiasEditField.Value = '8';
+
+            % Create AzBiasEditFieldLabel
+            app.AzBiasEditFieldLabel = uilabel(app.AntennaTuningParametersPanel);
+            app.AzBiasEditFieldLabel.HorizontalAlignment = 'right';
+            app.AzBiasEditFieldLabel.VerticalAlignment = 'top';
+            app.AzBiasEditFieldLabel.Position = [8 150 65 22];
+            app.AzBiasEditFieldLabel.Text = 'Az Bias';
+
+            % Create AzBiasEditField
+            app.AzBiasEditField = uieditfield(app.AntennaTuningParametersPanel, 'text');
+            app.AzBiasEditField.HorizontalAlignment = 'right';
+            app.AzBiasEditField.Position = [85 153 61 22];
+            app.AzBiasEditField.Value = '0';
+
+            % Create LockalignmentButton
+            app.LockalignmentButton = uibutton(app.AntennaTuningParametersPanel, 'push');
+            app.LockalignmentButton.ButtonPushedFcn = createCallbackFcn(app, @LockalignmentButtonPushed, true);
+            app.LockalignmentButton.Position = [222 45 100 22];
+            app.LockalignmentButton.Text = 'Lock alignment';
+
+            % Create AntennaalignmentazimuthbiasdegLabel
+            app.AntennaalignmentazimuthbiasdegLabel = uilabel(app.AntennaTuningParametersPanel);
+            app.AntennaalignmentazimuthbiasdegLabel.HorizontalAlignment = 'right';
+            app.AntennaalignmentazimuthbiasdegLabel.Position = [47 7 212 22];
+            app.AntennaalignmentazimuthbiasdegLabel.Text = 'Antenna alignment azimuth bias (deg):';
+
+            % Create AzimuthBias
+            app.AzimuthBias = uieditfield(app.AntennaTuningParametersPanel, 'numeric');
+            app.AzimuthBias.Editable = 'off';
+            app.AzimuthBias.Position = [286 7 37 22];
+            app.AzimuthBias.Value = 90;
+
+            % Create RotatorAlignmentMethodSwitchLabel
+            app.RotatorAlignmentMethodSwitchLabel = uilabel(app.AntennaTuningParametersPanel);
+            app.RotatorAlignmentMethodSwitchLabel.HorizontalAlignment = 'center';
+            app.RotatorAlignmentMethodSwitchLabel.FontWeight = 'bold';
+            app.RotatorAlignmentMethodSwitchLabel.Position = [21 85 156 22];
+            app.RotatorAlignmentMethodSwitchLabel.Text = 'Rotator Alignment Method';
+
+            % Create RotatorAlignmentMethodSwitch
+            app.RotatorAlignmentMethodSwitch = uiswitch(app.AntennaTuningParametersPanel, 'slider');
+            app.RotatorAlignmentMethodSwitch.Items = {'North', 'West'};
+            app.RotatorAlignmentMethodSwitch.ValueChangedFcn = createCallbackFcn(app, @RotatorAlignmentMethodSwitchValueChanged, true);
+            app.RotatorAlignmentMethodSwitch.Position = [76 58 45 20];
+            app.RotatorAlignmentMethodSwitch.Value = 'North';
+
+            % Create alignmentNote
+            app.alignmentNote = uilabel(app.AntennaTuningParametersPanel);
+            app.alignmentNote.FontColor = [1 0 0];
+            app.alignmentNote.Position = [214 75 142 28];
+            app.alignmentNote.Text = {'Note: send rotator to zero'; '         prior to this step. '};
+
+            % Create ElevationdegLabel
+            app.ElevationdegLabel = uilabel(app.UIFigure);
+            app.ElevationdegLabel.Position = [31 423 86 22];
+            app.ElevationdegLabel.Text = 'Elevation (deg)';
+
+            % Create AzimuthdegLabel
+            app.AzimuthdegLabel = uilabel(app.UIFigure);
+            app.AzimuthdegLabel.Position = [272 423 80 22];
+            app.AzimuthdegLabel.Text = 'Azimuth (deg)';
+
+            % Create Panel
+            app.Panel = uipanel(app.UIFigure);
+            app.Panel.Position = [6 222 371 193];
+
+            % Create BeginTrackingButton
+            app.BeginTrackingButton = uibutton(app.Panel, 'push');
+            app.BeginTrackingButton.ButtonPushedFcn = createCallbackFcn(app, @BeginTrackingButtonPushed, true);
+            app.BeginTrackingButton.BackgroundColor = [0.5922 0.9608 0.4784];
+            app.BeginTrackingButton.Enable = 'off';
+            app.BeginTrackingButton.Position = [12 127 100 22];
+            app.BeginTrackingButton.Text = 'Begin Tracking';
+
+            % Create ConnectGSButton
+            app.ConnectGSButton = uibutton(app.Panel, 'push');
+            app.ConnectGSButton.ButtonPushedFcn = createCallbackFcn(app, @ConnectGSButtonPushed, true);
+            app.ConnectGSButton.Position = [179 110 88 22];
+            app.ConnectGSButton.Text = 'Connect GS';
+
+            % Create ConnectingLabel
+            app.ConnectingLabel = uilabel(app.Panel);
+            app.ConnectingLabel.VerticalAlignment = 'top';
+            app.ConnectingLabel.Visible = 'off';
+            app.ConnectingLabel.Position = [268 134 66 15];
+            app.ConnectingLabel.Text = 'Connecting';
+
+            % Create DisconnectGSButton
+            app.DisconnectGSButton = uibutton(app.Panel, 'push');
+            app.DisconnectGSButton.ButtonPushedFcn = createCallbackFcn(app, @DisconnectGSButtonPushed, true);
+            app.DisconnectGSButton.Enable = 'off';
+            app.DisconnectGSButton.Position = [270 110 88 22];
+            app.DisconnectGSButton.Text = 'Disconnect GS';
+
+            % Create EndTrackingButton
+            app.EndTrackingButton = uibutton(app.Panel, 'push');
+            app.EndTrackingButton.ButtonPushedFcn = createCallbackFcn(app, @EndTrackingButtonPushed, true);
+            app.EndTrackingButton.BackgroundColor = [0.9608 0.5961 0.5961];
+            app.EndTrackingButton.Position = [13 97 100 22];
+            app.EndTrackingButton.Text = 'End Tracking';
+
+            % Create GSCOMPortDropDownLabel
+            app.GSCOMPortDropDownLabel = uilabel(app.Panel);
+            app.GSCOMPortDropDownLabel.HorizontalAlignment = 'right';
+            app.GSCOMPortDropDownLabel.VerticalAlignment = 'top';
+            app.GSCOMPortDropDownLabel.Position = [178 159 78 15];
+            app.GSCOMPortDropDownLabel.Text = 'GS COM Port';
+
+            % Create GSCOMPortDropDown
+            app.GSCOMPortDropDown = uidropdown(app.Panel);
+            app.GSCOMPortDropDown.Items = {};
+            app.GSCOMPortDropDown.ValueChangedFcn = createCallbackFcn(app, @GSCOMPortDropDownValueChanged, true);
+            app.GSCOMPortDropDown.Position = [266 154 70 22];
+            app.GSCOMPortDropDown.Value = {};
+
+            % Create RxCOMPortDropDownLabel
+            app.RxCOMPortDropDownLabel = uilabel(app.Panel);
+            app.RxCOMPortDropDownLabel.HorizontalAlignment = 'right';
+            app.RxCOMPortDropDownLabel.VerticalAlignment = 'top';
+            app.RxCOMPortDropDownLabel.Position = [14 158 76 15];
+            app.RxCOMPortDropDownLabel.Text = 'Rx COM Port';
+
+            % Create RxCOMPortDropDown
+            app.RxCOMPortDropDown = uidropdown(app.Panel);
+            app.RxCOMPortDropDown.Items = {};
+            app.RxCOMPortDropDown.ValueChangedFcn = createCallbackFcn(app, @RXCOMPortDropDownValueChanged, true);
+            app.RxCOMPortDropDown.Position = [101 154 61 22];
+            app.RxCOMPortDropDown.Value = {};
+
+            % Create ListeningLampLabel
+            app.ListeningLampLabel = uilabel(app.Panel);
+            app.ListeningLampLabel.HorizontalAlignment = 'right';
+            app.ListeningLampLabel.Position = [17 66 54 22];
+            app.ListeningLampLabel.Text = 'Listening';
+
+            % Create ListeningLamp
+            app.ListeningLamp = uilamp(app.Panel);
+            app.ListeningLamp.Position = [86 66 20 20];
+            app.ListeningLamp.Color = [1 1 1];
+
+            % Create ReceivingLampLabel
+            app.ReceivingLampLabel = uilabel(app.Panel);
+            app.ReceivingLampLabel.HorizontalAlignment = 'right';
+            app.ReceivingLampLabel.Position = [13 39 58 22];
+            app.ReceivingLampLabel.Text = 'Receiving';
+
+            % Create ReceivingLamp
+            app.ReceivingLamp = uilamp(app.Panel);
+            app.ReceivingLamp.Position = [86 39 20 20];
+            app.ReceivingLamp.Color = [1 1 1];
+
+            % Create AntenaTrackingModeButtonGroup
+            app.AntenaTrackingModeButtonGroup = uibuttongroup(app.Panel);
+            app.AntenaTrackingModeButtonGroup.Title = 'Antena Tracking Mode';
+            app.AntenaTrackingModeButtonGroup.SizeChangedFcn = createCallbackFcn(app, @AntenaTrackingModeButtonGroupSizeChanged, true);
+            app.AntenaTrackingModeButtonGroup.Position = [223 4 145 66];
+
+            % Create AzElButton
+            app.AzElButton = uiradiobutton(app.AntenaTrackingModeButtonGroup);
+            app.AzElButton.Text = 'Az/El';
+            app.AzElButton.Position = [7 20 57 15];
+            app.AzElButton.Value = true;
+
+            % Create AzOnlyButton
+            app.AzOnlyButton = uiradiobutton(app.AntenaTrackingModeButtonGroup);
+            app.AzOnlyButton.Text = 'Az Only';
+            app.AzOnlyButton.Position = [71 20 64 15];
+
+            % Create ElOnlyButton
+            app.ElOnlyButton = uiradiobutton(app.AntenaTrackingModeButtonGroup);
+            app.ElOnlyButton.Text = 'El Only';
+            app.ElOnlyButton.Position = [71 2 63 15];
+
+            % Create ManualButton
+            app.ManualButton = uiradiobutton(app.AntenaTrackingModeButtonGroup);
+            app.ManualButton.Text = 'Manual';
+            app.ManualButton.Position = [7 2 61 15];
+
+            % Create SerialBufferLabel
+            app.SerialBufferLabel = uilabel(app.Panel);
+            app.SerialBufferLabel.VerticalAlignment = 'top';
+            app.SerialBufferLabel.Position = [14 6 191 22];
+            app.SerialBufferLabel.Text = 'Serial Buffer: ';
+
+            % Create Panel_2
+            app.Panel_2 = uipanel(app.UIFigure);
+            app.Panel_2.Position = [382 199 526 216];
+
+            % Create gpsLAT
+            app.gpsLAT = uilabel(app.Panel_2);
+            app.gpsLAT.BackgroundColor = [1 1 1];
+            app.gpsLAT.HorizontalAlignment = 'right';
+            app.gpsLAT.VerticalAlignment = 'top';
+            app.gpsLAT.Position = [12 155 87 15];
+            app.gpsLAT.Text = '';
+
+            % Create gpsLONG
+            app.gpsLONG = uilabel(app.Panel_2);
+            app.gpsLONG.BackgroundColor = [1 1 1];
+            app.gpsLONG.HorizontalAlignment = 'right';
+            app.gpsLONG.VerticalAlignment = 'top';
+            app.gpsLONG.Position = [113 155 85 15];
+            app.gpsLONG.Text = '';
+
+            % Create gpsALT
+            app.gpsALT = uilabel(app.Panel_2);
+            app.gpsALT.BackgroundColor = [1 1 1];
+            app.gpsALT.HorizontalAlignment = 'right';
+            app.gpsALT.VerticalAlignment = 'top';
+            app.gpsALT.Position = [208 155 61 15];
+            app.gpsALT.Text = '';
+
+            % Create gpsFIX
+            app.gpsFIX = uilabel(app.Panel_2);
+            app.gpsFIX.BackgroundColor = [1 1 1];
+            app.gpsFIX.HorizontalAlignment = 'right';
+            app.gpsFIX.VerticalAlignment = 'top';
+            app.gpsFIX.Position = [282 155 25 15];
+            app.gpsFIX.Text = '';
+
+            % Create LatitudeLabel
+            app.LatitudeLabel = uilabel(app.Panel_2);
+            app.LatitudeLabel.VerticalAlignment = 'top';
+            app.LatitudeLabel.Position = [14 177 49 15];
+            app.LatitudeLabel.Text = 'Latitude';
+
+            % Create LongitudeLabel
+            app.LongitudeLabel = uilabel(app.Panel_2);
+            app.LongitudeLabel.Position = [113 177 58 15];
+            app.LongitudeLabel.Text = 'Longitude';
+
+            % Create AltitudeLabel
+            app.AltitudeLabel = uilabel(app.Panel_2);
+            app.AltitudeLabel.VerticalAlignment = 'top';
+            app.AltitudeLabel.Position = [216 175 46 18];
+            app.AltitudeLabel.Text = 'Altitude';
+
+            % Create GPSFixLabel
+            app.GPSFixLabel = uilabel(app.Panel_2);
+            app.GPSFixLabel.VerticalAlignment = 'top';
+            app.GPSFixLabel.Position = [274 171 50 22];
+            app.GPSFixLabel.Text = 'GPS Fix';
+
+            % Create gpsSATS
+            app.gpsSATS = uilabel(app.Panel_2);
+            app.gpsSATS.BackgroundColor = [1 1 1];
+            app.gpsSATS.HorizontalAlignment = 'right';
+            app.gpsSATS.VerticalAlignment = 'top';
+            app.gpsSATS.Position = [337 155 25 15];
+            app.gpsSATS.Text = '';
+
+            % Create SatsLabel
+            app.SatsLabel = uilabel(app.Panel_2);
+            app.SatsLabel.VerticalAlignment = 'top';
+            app.SatsLabel.Position = [331 177 37 15];
+            app.SatsLabel.Text = '#Sats';
+
+            % Create GPSTOWmsLabel
+            app.GPSTOWmsLabel = uilabel(app.Panel_2);
+            app.GPSTOWmsLabel.VerticalAlignment = 'top';
+            app.GPSTOWmsLabel.Position = [435 169 89 22];
+            app.GPSTOWmsLabel.Text = 'GPS TOW (ms)';
+
+            % Create UseXBtosetGSPositionButton
+            app.UseXBtosetGSPositionButton = uibutton(app.Panel_2, 'push');
+            app.UseXBtosetGSPositionButton.ButtonPushedFcn = createCallbackFcn(app, @UseXBtosetGSPositionButtonPushed, true);
+            app.UseXBtosetGSPositionButton.BackgroundColor = [1 1 0];
+            app.UseXBtosetGSPositionButton.Position = [230 80 156 22];
+            app.UseXBtosetGSPositionButton.Text = 'Use XB to set GS Position';
+
+            % Create GPSstatLamp
+            app.GPSstatLamp = uilamp(app.Panel_2);
+            app.GPSstatLamp.Position = [383 152 20 20];
+            app.GPSstatLamp.Color = [1 0 0];
+
+            % Create GPSLockLabel
+            app.GPSLockLabel = uilabel(app.Panel_2);
+            app.GPSLockLabel.VerticalAlignment = 'top';
+            app.GPSLockLabel.Position = [372 170 50 22];
+            app.GPSLockLabel.Text = '3D Lock';
+
+            % Create AltitudeEditFieldLabel
+            app.AltitudeEditFieldLabel = uilabel(app.Panel_2);
+            app.AltitudeEditFieldLabel.HorizontalAlignment = 'center';
+            app.AltitudeEditFieldLabel.VerticalAlignment = 'top';
+            app.AltitudeEditFieldLabel.Position = [165 104 46 15];
+            app.AltitudeEditFieldLabel.Text = 'Altitude';
+
+            % Create GS_Altitude
+            app.GS_Altitude = uieditfield(app.Panel_2, 'text');
+            app.GS_Altitude.Editable = 'off';
+            app.GS_Altitude.HorizontalAlignment = 'right';
+            app.GS_Altitude.Position = [157 78 61 22];
+            app.GS_Altitude.Value = '1690';
+
+            % Create LongitudeEditFieldLabel
+            app.LongitudeEditFieldLabel = uilabel(app.Panel_2);
+            app.LongitudeEditFieldLabel.HorizontalAlignment = 'center';
+            app.LongitudeEditFieldLabel.VerticalAlignment = 'top';
+            app.LongitudeEditFieldLabel.Position = [88 104 58 15];
+            app.LongitudeEditFieldLabel.Text = 'Longitude';
+
+            % Create GS_Longitude
+            app.GS_Longitude = uieditfield(app.Panel_2, 'text');
+            app.GS_Longitude.Editable = 'off';
+            app.GS_Longitude.HorizontalAlignment = 'right';
+            app.GS_Longitude.Position = [86 78 61 22];
+            app.GS_Longitude.Value = '-105.2309';
+
+            % Create LatitudeEditFieldLabel
+            app.LatitudeEditFieldLabel = uilabel(app.Panel_2);
+            app.LatitudeEditFieldLabel.HorizontalAlignment = 'center';
+            app.LatitudeEditFieldLabel.VerticalAlignment = 'top';
+            app.LatitudeEditFieldLabel.Position = [23 104 48 15];
+            app.LatitudeEditFieldLabel.Text = 'Latitude';
+
+            % Create GS_Latitude
+            app.GS_Latitude = uieditfield(app.Panel_2, 'text');
+            app.GS_Latitude.Editable = 'off';
+            app.GS_Latitude.HorizontalAlignment = 'right';
+            app.GS_Latitude.Position = [16 78 61 22];
+            app.GS_Latitude.Value = '39.9719';
+
+            % Create LatitudeDiffmLabel
+            app.LatitudeDiffmLabel = uilabel(app.Panel_2);
+            app.LatitudeDiffmLabel.HorizontalAlignment = 'right';
+            app.LatitudeDiffmLabel.Position = [24 40 94 22];
+            app.LatitudeDiffmLabel.Text = 'Latitude Diff. (m)';
+
+            % Create LatitudeDiff
+            app.LatitudeDiff = uieditfield(app.Panel_2, 'numeric');
+            app.LatitudeDiff.Editable = 'off';
+            app.LatitudeDiff.Position = [144 40 73 22];
+
+            % Create LongitudeDiffmLabel
+            app.LongitudeDiffmLabel = uilabel(app.Panel_2);
+            app.LongitudeDiffmLabel.HorizontalAlignment = 'right';
+            app.LongitudeDiffmLabel.Position = [14 10 104 22];
+            app.LongitudeDiffmLabel.Text = 'Longitude Diff. (m)';
+
+            % Create LongitudeDiff
+            app.LongitudeDiff = uieditfield(app.Panel_2, 'numeric');
+            app.LongitudeDiff.Editable = 'off';
+            app.LongitudeDiff.Position = [144 10 73 22];
+
+            % Create LaunchTimeButton
+            app.LaunchTimeButton = uibutton(app.Panel_2, 'push');
+            app.LaunchTimeButton.ButtonPushedFcn = createCallbackFcn(app, @LaunchTimeButtonPushed, true);
+            app.LaunchTimeButton.BackgroundColor = [1 1 0.0667];
+            app.LaunchTimeButton.Enable = 'off';
+            app.LaunchTimeButton.Position = [405 80 100 22];
+            app.LaunchTimeButton.Text = 'Launch Time';
+
+            % Create LaunchTimeLabel
+            app.LaunchTimeLabel = uilabel(app.Panel_2);
+            app.LaunchTimeLabel.VerticalAlignment = 'top';
+            app.LaunchTimeLabel.Position = [296 41 140 22];
+            app.LaunchTimeLabel.Text = 'Launch Time: ';
+
+            % Create ElapsedTimeLabel
+            app.ElapsedTimeLabel = uilabel(app.Panel_2);
+            app.ElapsedTimeLabel.VerticalAlignment = 'top';
+            app.ElapsedTimeLabel.Position = [293 20 225 22];
+            app.ElapsedTimeLabel.Text = 'Elapsed Time: ';
+
+            % Create gpsTOW
+            app.gpsTOW = uilabel(app.Panel_2);
+            app.gpsTOW.BackgroundColor = [1 1 1];
+            app.gpsTOW.HorizontalAlignment = 'right';
+            app.gpsTOW.VerticalAlignment = 'top';
+            app.gpsTOW.Position = [435 154 77 15];
+            app.gpsTOW.Text = '';
+
+            % Create GroundstationinfoLabel
+            app.GroundstationinfoLabel = uilabel(app.Panel_2);
+            app.GroundstationinfoLabel.FontWeight = 'bold';
+            app.GroundstationinfoLabel.Position = [14 120 121 22];
+            app.GroundstationinfoLabel.Text = 'Ground station info:';
+
+            % Create Panel_3
+            app.Panel_3 = uipanel(app.UIFigure);
+            app.Panel_3.Position = [382 6 526 186];
+
+            % Create LostPackets
+            app.LostPackets = uilabel(app.Panel_3);
+            app.LostPackets.VerticalAlignment = 'top';
+            app.LostPackets.Position = [8 167 183 15];
+            app.LostPackets.Text = 'Lost Packets: ';
+
+            % Create ReceivedPackets
+            app.ReceivedPackets = uilabel(app.Panel_3);
+            app.ReceivedPackets.VerticalAlignment = 'top';
+            app.ReceivedPackets.Position = [8 152 183 15];
+            app.ReceivedPackets.Text = 'Received Packets: ';
+
+            % Create LossesLabel
+            app.LossesLabel = uilabel(app.Panel_3);
+            app.LossesLabel.VerticalAlignment = 'top';
+            app.LossesLabel.Position = [167 159 123 22];
+            app.LossesLabel.Text = '%Losses:';
+
+            % Create GondolapacketsLabel
+            app.GondolapacketsLabel = uilabel(app.Panel_3);
+            app.GondolapacketsLabel.Position = [11 126 280 22];
+            app.GondolapacketsLabel.Text = 'Gondola packets:';
+
+            % Create InstrpacketsLabel
+            app.InstrpacketsLabel = uilabel(app.Panel_3);
+            app.InstrpacketsLabel.Position = [31 110 280 22];
+            app.InstrpacketsLabel.Text = 'Instr. packets:';
+
+            % Create InstrPacket_start
+            app.InstrPacket_start = uilabel(app.Panel_3);
+            app.InstrPacket_start.VerticalAlignment = 'top';
+            app.InstrPacket_start.Position = [333 158 183 22];
+            app.InstrPacket_start.Text = 'Starting packet (instr): ';
+
+            % Create GondPacket_start
+            app.GondPacket_start = uilabel(app.Panel_3);
+            app.GondPacket_start.VerticalAlignment = 'top';
+            app.GondPacket_start.Position = [333 142 183 22];
+            app.GondPacket_start.Text = 'Starting packet (gond): ';
+
+            % Create InstrPacket_now
+            app.InstrPacket_now = uilabel(app.Panel_3);
+            app.InstrPacket_now.VerticalAlignment = 'top';
+            app.InstrPacket_now.Position = [333 95 183 22];
+            app.InstrPacket_now.Text = 'Current packet (instr): ';
+
+            % Create GondPacket_now
+            app.GondPacket_now = uilabel(app.Panel_3);
+            app.GondPacket_now.VerticalAlignment = 'top';
+            app.GondPacket_now.Position = [333 78 183 22];
+            app.GondPacket_now.Text = 'Current packet (gond): ';
+
+            % Create RawPacket_start
+            app.RawPacket_start = uilabel(app.Panel_3);
+            app.RawPacket_start.VerticalAlignment = 'top';
+            app.RawPacket_start.Position = [333 125 183 22];
+            app.RawPacket_start.Text = 'Starting epoch (raw): ';
+
+            % Create RawpacketsLabel
+            app.RawpacketsLabel = uilabel(app.Panel_3);
+            app.RawpacketsLabel.Position = [34 92 280 22];
+            app.RawpacketsLabel.Text = 'Raw packets:';
+
+            % Create EpochIdxrawLabel
+            app.EpochIdxrawLabel = uilabel(app.Panel_3);
+            app.EpochIdxrawLabel.Position = [333 63 174 22];
+            app.EpochIdxrawLabel.Text = 'Epoch Idx (raw):';
+
+            % Create RecordIdxrawLabel
+            app.RecordIdxrawLabel = uilabel(app.Panel_3);
+            app.RecordIdxrawLabel.Position = [333 45 174 22];
+            app.RecordIdxrawLabel.Text = 'Record Idx (raw):';
+
+            % Create NoStatusLampLabel
+            app.NoStatusLampLabel = uilabel(app.UIFigure);
+            app.NoStatusLampLabel.HorizontalAlignment = 'right';
+            app.NoStatusLampLabel.Position = [515 482 58 22];
+            app.NoStatusLampLabel.Text = 'No Status';
+
+            % Create NoStatusLamp
+            app.NoStatusLamp = uilamp(app.UIFigure);
+            app.NoStatusLamp.Position = [588 485 16 16];
+            app.NoStatusLamp.Color = [1 1 1];
+
+            % Create VentclosedLampLabel
+            app.VentclosedLampLabel = uilabel(app.UIFigure);
+            app.VentclosedLampLabel.HorizontalAlignment = 'right';
+            app.VentclosedLampLabel.Position = [505 461 68 22];
+            app.VentclosedLampLabel.Text = 'Vent closed';
+
+            % Create VentclosedLamp
+            app.VentclosedLamp = uilamp(app.UIFigure);
+            app.VentclosedLamp.Position = [588 464 16 16];
+            app.VentclosedLamp.Color = [1 1 1];
+
+            % Create VentopenLampLabel
+            app.VentopenLampLabel = uilabel(app.UIFigure);
+            app.VentopenLampLabel.HorizontalAlignment = 'right';
+            app.VentopenLampLabel.Position = [513 440 60 22];
+            app.VentopenLampLabel.Text = 'Vent open';
+
+            % Create VentopenLamp
+            app.VentopenLamp = uilamp(app.UIFigure);
+            app.VentopenLamp.Position = [588 443 16 16];
+            app.VentopenLamp.Color = [1 1 1];
+
+            % Create AscentRateEst
+            app.AscentRateEst = uilabel(app.UIFigure);
+            app.AscentRateEst.BackgroundColor = [1 1 1];
+            app.AscentRateEst.HorizontalAlignment = 'right';
+            app.AscentRateEst.VerticalAlignment = 'top';
+            app.AscentRateEst.Position = [868 503 76 15];
+            app.AscentRateEst.Text = '';
+
+            % Create estimatedvalueLabel
+            app.estimatedvalueLabel = uilabel(app.UIFigure);
+            app.estimatedvalueLabel.Position = [950 499 98 22];
+            app.estimatedvalueLabel.Text = '(estimated value)';
+
+            % Create GPSVelocitiesLabel
+            app.GPSVelocitiesLabel = uilabel(app.UIFigure);
+            app.GPSVelocitiesLabel.FontWeight = 'bold';
+            app.GPSVelocitiesLabel.Position = [719 524 90 22];
+            app.GPSVelocitiesLabel.Text = 'GPS Velocities';
+
+            % Create RMShorizvelLabel
+            app.RMShorizvelLabel = uilabel(app.UIFigure);
+            app.RMShorizvelLabel.VerticalAlignment = 'top';
+            app.RMShorizvelLabel.Position = [918 170 226 22];
+            app.RMShorizvelLabel.Text = 'RMS horiz. vel. (m/s):';
+
+            % Create RMSvertvelLabel
+            app.RMSvertvelLabel = uilabel(app.UIFigure);
+            app.RMSvertvelLabel.VerticalAlignment = 'top';
+            app.RMSvertvelLabel.Position = [918 150 226 22];
+            app.RMSvertvelLabel.Text = 'RMS vert. vel. (m/s):';
+
+            % Show the figure after all components are created
+            app.UIFigure.Visible = 'on';
+        end
+    end
+
+    % App creation and deletion
+    methods (Access = public)
+
+        % Construct app
+        function app = MURI_HAB_GUI_v18_Permanent_GS
+
+            % Create UIFigure and components
+            createComponents(app)
+
+            % Register the app with App Designer
+            registerApp(app, app.UIFigure)
+
+            % Execute the startup function
+            runStartupFcn(app, @startupFcn)
+
+            if nargout == 0
+                clear app
+            end
+        end
+
+        % Code that executes before app deletion
+        function delete(app)
+
+            % Delete UIFigure when app is deleted
+            delete(app.UIFigure)
+        end
+    end
+end
